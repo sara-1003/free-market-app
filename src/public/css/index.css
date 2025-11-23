@@ -1,0 +1,51 @@
+.tabs {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid #111111;
+    box-sizing: border-box;
+    padding: 10px 0;
+    margin-bottom: 50px;
+}
+
+.tabs a {
+    text-align: center;
+    text-decoration: none;
+    color: #1f1f1f;
+    padding: 20px 0 10px 20px;
+    margin-left: 80px;
+}
+
+.tabs a.tab__best.active,
+.tabs a.tab__mylist.active {
+    color: red;
+}
+
+.items__list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 120px;
+    width: 100%;
+    padding: 0 50px;
+}
+
+.item {
+    flex: 0 0 23%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.item__link{
+    text-decoration: none;
+}
+
+.item__link img {
+    width: 100%;
+    object-fit: contain;
+    aspect-ratio: 1 / 1;
+    background-color: #ddd;
+}
+
+.item__link p{
+    color: #000;
+}

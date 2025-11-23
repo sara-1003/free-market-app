@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@php
+$hideSearch = true;
+$hideNav    = true;
+@endphp
+
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/auth/register.css')}}">
 @endsection
@@ -22,7 +27,7 @@
         </div>
         <div class="register-form__group">
             <label class="register-form__label" for="email">メールアドレス</label>
-            <input class="register-form__input" type="email" name="email" id="email" value="{{ old('email') }}">
+            <input class="register-form__input" type="text" name="email" id="email" value="{{ old('email') }}">
             <p class="form__error">
                 @error('email')
                 {{$message}}
@@ -42,7 +47,7 @@
             <label class="register-form__label" for="password_confirmation">確認用パスワード</label>
             <input class="register-form__input" type="password" name="password_confirmation" id="password_confirmation">
             <p class="form__error">
-                @error('password')
+                @error('password_confirmation')
                 {{$message}}
                 @enderror
             </p>

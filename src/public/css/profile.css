@@ -1,0 +1,92 @@
+.profile__content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 50px 200px;
+}
+
+.profile{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.profile__inner{
+    display: flex;
+    align-items: center;
+}
+
+.profile__img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #ddd;
+    margin-right: 50px;
+}
+
+.profile__name{
+    margin-right: 10px;
+}
+
+.profile__edit--button{
+    width: 100px;
+    height: 30px;
+    padding: 10px 15px;
+    margin-left: 30px;
+    color: #f82a5a;
+    border-radius: 3px;
+    border: 1px solid #f82a5a;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.tabs {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid #111111;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    margin-bottom: 50px;
+}
+
+.tabs a {
+    text-align: center;
+    text-decoration: none;
+    color: #1f1f1f;
+    padding-left: 100px;
+}
+
+.tabs a.tab__sell.active,
+.tabs a.tab__buy.active {
+    color: red;
+}
+
+.items__list{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 120px;
+    width: 100%;
+    padding: 0 50px;
+}
+
+.item{
+    text-align: left;
+}
+
+.item__link{
+    text-decoration: none;
+    color: #000;
+}
+
+.item img{
+    width: 100%;
+    object-fit: contain;
+    aspect-ratio: 1 / 1;
+    background-color: #ddd;
+}
+
+.item p{
+    font-size: 18px;
+}

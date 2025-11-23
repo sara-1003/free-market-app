@@ -17,12 +17,12 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->string('brand');
+            $table->string('brand')->nullable();
             $table->string('description');
             $table->integer('price');
             $table->string('condition');
             $table->string('img');
-            $table->boolean('sold');
+            $table->boolean('sold')->default(false);
             $table->timestamps();
         });
     }

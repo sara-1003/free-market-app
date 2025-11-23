@@ -1,0 +1,184 @@
+.sell__content{
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 30px;
+}
+
+.sell__heading{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sell-form{
+    width: 55%;
+    margin: 0 auto;
+}
+
+.item__img{
+    width: 100%;
+}
+
+.detail__title{
+    text-align: left;
+    margin-bottom: 0;
+    margin-top: 40px;
+}
+
+.item__img-box{
+    width: 100%;
+    height: 150px;
+    border: 2px dotted #d9d9d9;
+    border-radius: 3px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.item__img-label{
+    padding:5px 10px;
+    position: absolute;
+    color: #f82a5a;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #f82a5a;
+    cursor: pointer;
+    text-align: center;
+    z-index: 2;
+}
+
+.item__img-input{
+    display: none;
+}
+
+.item__img-preview{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: none;
+}
+
+.detail__heading{
+    border-bottom: 2px solid #c3c3c3;
+    color: #8d8d8d;
+    margin-top: 50px;
+}
+
+.detail__heading h2 {
+    margin: 2px 0;
+}
+
+.item__category{
+    width: 100%;
+}
+
+.item__category-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 10px;
+}
+
+.item__category-label{
+    display: inline-block;
+    padding: 6px 15px;
+    border: 1px solid #f82a5a;
+    border-radius: 20px;
+    color: #f82a5a;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.item__category-label input[type="checkbox"]{
+    display: none;
+}
+
+.item__category-label.selected {
+    color: #fff;
+    background: #f82a5a;
+}
+
+.item__category-label:hover{
+    background: #ffe7ec;
+}
+
+.item__condition{
+    width: 100%;
+}
+
+.item__condition--select{
+    width: 100%;
+    padding: 10px 15px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #fff url("data:image/svg+xml;utf8,<svg fill='%238f7c6a' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
+    background-size: 30px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.item__explanation{
+    width: 100%;
+}
+
+.item__name--input{
+    width: 100%;
+    height: 40px;
+    padding: 5px 10px;
+}
+
+.item__brand--input{
+    width: 100%;
+    height: 40px;
+    padding: 5px 10px;
+}
+
+.item__description--textarea{
+    width: 100%;
+    height: 100px;
+    padding: 10px 5px;
+}
+
+.price__wrapper{
+    display: flex;
+    align-items: center;
+    border: 1px solid #000;
+    border-radius: 3px;
+    padding: 0 10px;
+    height: 40px;
+}
+
+.item__price--span{
+    margin-right: 5px;
+}
+
+.item__price--input{
+    flex: 1;
+    border: none;
+    outline: none;
+    height: 100%;
+}
+
+.sell__button {
+    text-align: center;
+    width: 100%;
+}
+
+.sell__button-submit {
+    width: 100%;
+    color: #fff;
+    background: #f82a5a;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    margin-top: 100px;
+    cursor: pointer;
+}
+
+.form__error {
+    color: red;
+}

@@ -59,6 +59,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Favorite::class);
     }
+    //お気に入り商品の情報を取得するために追記
+    public function favoriteItems()
+    {
+        return $this->belongsToMany(Item::class, 'favorites', 'user_id', 'item_id')->withTimestamps();
+    }
 
     // comment 1対多
     public function comment()
