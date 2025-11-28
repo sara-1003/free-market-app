@@ -19,6 +19,7 @@ use App\Http\Controllers\ItemController;
 
 Route::get('/',[AuthController::class,'index']);
 Route::get('items/search', [AuthController::class, 'search'])->name('items.search');
+Route::get('/item/{item_id}',[ItemController::class,"detail"]);
 
 
 Route::middleware('auth')->group(function () {
@@ -29,6 +30,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('mypage/profile',[ProfileController::class,'update'])->name('profile.update');
     Route::get('/sell',[ItemController::class,'index']);
     Route::post('sell',[ItemController::class,'sell']);
+    Route::post('/item/{item}/comment',[ItemController::class,'store']);
+    Route::get('/purchase/{item_id}',[ItemController::class,'show'])->name('purchase');
+    Route::get('/purchase/address/{item_id}',[ItemController::class,'edit']);
+    Route::post('/purchase/address/{item_id}',[ItemController::class,'update']);
 });
 
+
+Route::get('/test-form', function() {
+    return view('test_form');
+});
 

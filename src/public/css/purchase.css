@@ -1,0 +1,114 @@
+.purchase__content{
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 15px;
+}
+
+.purchase-form{
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+}
+.purchase__content--left{
+    width: 700px;
+}
+
+.item__detail{
+    display: flex;
+    padding: 30px 0;
+    border-bottom: 2px solid #ddd;
+}
+
+.item__detail img{
+    width: 200px;
+    object-fit: contain;
+    aspect-ratio: 1 / 1;
+    background-color: #ddd;
+    margin-right: 40px;
+}
+
+.item__detail h2{
+    font-size: 30px;
+    margin-bottom: 0;
+}
+
+.item__detail p{
+    font-size: 25px;
+}
+
+.payment__item{
+    padding: 20px 15px;
+    border-bottom: 2px solid #ddd;
+}
+
+.payment__item-select{
+    width: 200px;
+    padding: 5px 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #fff url("data:image/svg+xml;utf8,<svg fill='%238f7c6a' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
+    background-size: 30px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 40px;
+}
+
+.address__item{
+    padding: 20px 15px;
+    border-bottom: 2px solid #ddd;
+}
+
+.address__item--option{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.address__item--change{
+    text-decoration: none;
+}
+
+.address__item--post{
+    margin-left: 40px;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.address__item--address{
+    margin-left: 40px;
+    margin-top: 0;
+}
+
+.purchase__content--right{
+    width: 350px;
+    margin: 40px 0;
+}
+
+.payment-info__row{
+    border: 1px solid #ddd;
+    padding: 30px 50px;;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.payment-info__row:first-child{
+    border-bottom: 0;
+}
+
+.purchase__button{
+    text-align: center;
+    width: 100%;
+}
+
+.purchase__button-submit{
+    width: 100%;
+    color: #fff;
+    background: #f82a5a;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 30px;
+}
