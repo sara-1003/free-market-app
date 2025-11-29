@@ -37,7 +37,3 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/test-form', function() {
-    return view('test_form');
-});
-

@@ -99,19 +99,25 @@ class ItemController extends Controller
     //住所変更ページの表示
     public function edit($item_id)
     {
+        $user=auth()->user();
         $item=Item::findOrFail($item_id);
-        $user = auth()->user();
 
-        return view('edit_address',compact('item','user'));
+        return view('edit_address',compact('user','item'));
     }
-    
+
     //住所更新
-    public function update(ProfileRequest $request, $item_id)
+    public function update(Request $request,$item_id)
     {
-        $user = auth()->user();
-        
-        $profile = $user->profile ?? $user->profile()->create([]); $profile->post_code = $request->post_code; $profile->address = $request->address; $profile->building = $request->building; $profile->save();
+        $user=auth()->user();
 
-        return redirect()->route('purchase', ['item_id' => $item_id]);
+        $user->profile()->updateOrCreate([], [
+        'post_code' => $request->post_code,
+        'address'   => $request->address,
+        'building'  => $request->building,
+    ]);
+    
+    return redirect('/purchase/' . $item_id);
+
     }
+
 }
