@@ -22,12 +22,14 @@
     </div>
     <div class="items__list">
         @foreach($items as $item)
+        @if($item)
         <div class="item">
             <a class="item__link" href="/item/{{ $item->id }}">
-                <img src="{{ asset('storage/' . $item->img) }}" alt="商品画像">
+                <img src="{{ Str::startsWith($item->img, 'http') ? $item->img : asset('storage/' . $item->img) }}" alt="商品画像">
                 <p>{{ $item->name }}</p>
             </a>
         </div>
+        @endif
         @endforeach
     </div>
 @endsection

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MypageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ItemController;
 
@@ -34,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/purchase/{item_id}',[ItemController::class,'show'])->name('purchase');
     Route::get('/purchase/address/{item_id}',[ItemController::class,'edit']);
     Route::post('/purchase/address/{item_id}',[ItemController::class,'update']);
+    Route::post('/purchase/{item_id}',[ItemController::class,'purchase']);
+    Route::post('favorite/{item_id}',[ItemController::class,'toggle']);
 });
 
 

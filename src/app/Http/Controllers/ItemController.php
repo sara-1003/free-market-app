@@ -7,9 +7,12 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Item;
 use App\Models\Comment;
+use App\Models\Order;
 use App\Http\Requests\ExhibitionRequest;
 use App\Http\Requests\CommentRequest;
 use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PurchaseRequest;
 
 
 class ItemController extends Controller
@@ -68,7 +71,7 @@ class ItemController extends Controller
 
         $categories = $item->category;
         $comments = $item->comment;
-        $favorited = auth()->check() && auth()->user()->favorite->contains($item->id);
+        $favorited = auth()->check() && auth()->user()->favorite->contains('item_id',$item->id);
         $favoriteCount = $item->favorite->count();
         $commentCount = $comments->count();
 
@@ -106,7 +109,7 @@ class ItemController extends Controller
     }
 
     //住所更新
-    public function update(Request $request,$item_id)
+    public function update(AddressRequest $request,$item_id)
     {
         $user=auth()->user();
 
@@ -118,6 +121,41 @@ class ItemController extends Controller
     
     return redirect('/purchase/' . $item_id);
 
+    }
+
+    //商品購入ボタンの実装
+    public function purchase(PurchaseRequest $request,$item_id)
+    {
+        $user=auth()->user();
+        $item=Item::findOrFail($item_id);
+
+        Order::create([
+            'user_id'=>$user->id,
+            'item_id'=>$item->id,
+            'payment_method'=>$request->payment_method,
+        ]);
+
+        $item->update(['sold'=>true]);
+
+        return redirect('/');
+
+    }
+
+    //いいねの実装
+    public function toggle($item_id)
+    {
+        $user=auth()->user();
+
+        $is_favorited=$user->favorite()->where('item_id',$item_id)->exists();
+
+        if($is_favorited){
+            $user->favorite()->where('item_id',$item_id)->delete();
+        }else{
+            $user->favorite()->create([
+                'item_id'=>$item_id,
+            ]);
+        }
+        return back();
     }
 
 }

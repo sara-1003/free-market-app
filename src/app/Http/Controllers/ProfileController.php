@@ -8,6 +8,7 @@ use App\Http\Requests\ProfileRequest;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Profile;
+use App\Models\Order;
 
 
 class ProfileController extends Controller
@@ -53,13 +54,17 @@ class ProfileController extends Controller
     public function index(Request $request)
     {
         $user=auth()->user();
-        
         $page=$request->query('page','sell');
 
         if($page === 'sell'){
             $items=$user->item()->get();
         }else{
-            $items=$user->orders()->with('item')->get()->pluck('item');
+        // order() → Item に変換
+        $items = $user->order()->with('item')->get()
+                ->map(function($order){
+                   return $order->item; // Order から Item を取り出す
+                })
+                ->filter(); // null（商品が削除されている場合など）を除去
         }
         return view('profile',compact('user','items','page'));
     }

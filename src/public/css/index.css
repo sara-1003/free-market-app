@@ -28,16 +28,32 @@
     padding: 0 50px;
 }
 
+.sold-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #f82a5a;
+    color: #fff;
+    padding: 15px 30px;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 5px;
+    z-index: 10;
+}
+
 .item {
     flex: 0 0 23%;
     box-sizing: border-box;
     margin-bottom: 20px;
     text-align: left;
+    position: relative;
 }
 
 .item__link{
     text-decoration: none;
 }
+
 
 .item__link img {
     width: 100%;

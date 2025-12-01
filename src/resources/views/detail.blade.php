@@ -17,7 +17,12 @@
         <p class="item__price">¥{{ number_format($item->price) }} <span>(税込)</span></p>
         <div class="item__detail--icons">
             <div class="item__favorite">
-                <img src="{{ $favorited ? asset('images/heart-pink.png') : asset('images/heart.png') }}">
+                <form action="/favorite/{{$item->id}}" method="post">
+                    @csrf
+                    <button type="submit">
+                        <img src="{{ $favorited ? asset('images/heart-pink.png') : asset('images/heart.png') }}">
+                    </button>
+                </form>
                 <span>{{ $favoriteCount }}</span>
             </div>
             <div class="item__comment">
