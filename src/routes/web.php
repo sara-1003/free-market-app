@@ -1,9 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ItemController;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +24,7 @@ Route::get('items/search', [AuthController::class, 'search'])->name('items.searc
 Route::get('/item/{item_id}',[ItemController::class,"detail"]);
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth','verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'create'])->name('profile.create');
     Route::post('/profile', [ProfileController::class, 'store'])->name('profile.store');
     Route::get('/mypage',[ProfileController::class,'index'])->name('mypage');
@@ -37,4 +40,19 @@ Route::middleware('auth')->group(function () {
     Route::post('favorite/{item_id}',[ItemController::class,'toggle']);
 });
 
+
+// ログイン済みだがメール未認証
+Route::middleware('auth')->group(function () {
+    Route::get('/email/verify', function () {
+        return view('auth.email');
+    })->name('verification.notice');
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back();
+    })->middleware('throttle:6,1')->name('verification.send');
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+        return redirect()->to(route('profile.create'));
+    })->middleware('auth', 'signed')->name('verification.verify');
+});
 
