@@ -17,6 +17,10 @@ class ProfileController extends Controller
     public function create()
     {
         $user=Auth()->user();
+        
+        if($user->profile){
+            return redirect('/');
+        }
 
         return view('profile_create',compact('user'));
     }

@@ -29,7 +29,7 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::post('/profile', [ProfileController::class, 'store'])->name('profile.store');
     Route::get('/mypage',[ProfileController::class,'index'])->name('mypage');
     Route::get('/mypage/profile',[ProfileController::class,'edit'])->name('profile.edit');
-    Route::patch('mypage/profile',[ProfileController::class,'update'])->name('profile.update');
+    Route::patch('/mypage/profile',[ProfileController::class,'update'])->name('profile.update');
     Route::get('/sell',[ItemController::class,'index']);
     Route::post('sell',[ItemController::class,'sell']);
     Route::post('/item/{item}/comment',[ItemController::class,'store']);
@@ -38,7 +38,15 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::post('/purchase/address/{item_id}',[ItemController::class,'update']);
     Route::post('/purchase/{item_id}',[ItemController::class,'purchase']);
     Route::post('favorite/{item_id}',[ItemController::class,'toggle']);
+    Route::get('/success', function () {
+        return redirect('/');
+    });
+    
+    Route::get('/cancel', function () {
+        return redirect('/');
+    });
 });
+
 
 
 // ログイン済みだがメール未認証
@@ -52,7 +60,11 @@ Route::middleware('auth')->group(function () {
     })->middleware('throttle:6,1')->name('verification.send');
     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
-        return redirect()->to(route('profile.create'));
+        $user=$request->user();
+        if(!$user->profile){
+            return redirect()->route('profile.create');
+        }
+        return redirect('/');
     })->middleware('auth', 'signed')->name('verification.verify');
 });
 

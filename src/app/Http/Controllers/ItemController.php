@@ -13,6 +13,8 @@ use App\Http\Requests\CommentRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\PurchaseRequest;
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
 
 
 class ItemController extends Controller
@@ -118,28 +120,51 @@ class ItemController extends Controller
         'address'   => $request->address,
         'building'  => $request->building,
     ]);
-    
     return redirect('/purchase/' . $item_id);
 
     }
 
     //商品購入ボタンの実装
-    public function purchase(PurchaseRequest $request,$item_id)
-    {
-        $user=auth()->user();
-        $item=Item::findOrFail($item_id);
+    public function purchase(PurchaseRequest $request, $item_id)
+{
+    $user = auth()->user();
+    $item = Item::findOrFail($item_id);
 
-        Order::create([
-            'user_id'=>$user->id,
-            'item_id'=>$item->id,
-            'payment_method'=>$request->payment_method,
-        ]);
+    Order::create([
+        'user_id' => $user->id,
+        'item_id' => $item->id,
+        'payment_method' => $request->payment_method,
+    ]);
 
-        $item->update(['sold'=>true]);
+    $item->update(['sold' => true]);
 
-        return redirect('/');
 
-    }
+    //Stripe
+    \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+    $paymentMethodTypes = ($request->payment_method === 'コンビニ払い')
+        ? ['konbini']
+        : ['card'];
+
+    $session = \Stripe\Checkout\Session::create([
+        'payment_method_types' => $paymentMethodTypes,
+        'line_items' => [[
+            'price_data' => [
+                'currency' => 'jpy',
+                'product_data' => [
+                    'name' => $item->name,
+                ],
+                'unit_amount' => $item->price,
+            ],
+            'quantity' => 1,
+        ]],
+        'mode' => 'payment',
+        'success_url' => url('/success'),
+        'cancel_url' => url('/cancel'),
+    ]);
+
+    return redirect($session->url);
+}
 
     //いいねの実装
     public function toggle($item_id)

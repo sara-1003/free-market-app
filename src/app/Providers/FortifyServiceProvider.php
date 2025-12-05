@@ -13,6 +13,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\RegisterResponse;
+use Laravel\Fortify\Contracts\LoginResponse;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
@@ -62,5 +64,20 @@ class FortifyServiceProvider extends ServiceProvider
 
         $this->app->bind(FortifyRegisterRequest::class, RegisterRequest::class);
         $this->app->bind(FortifyLoginRequest::class, LoginRequest::class);
+
+        $this->app->singleton(LoginResponse::class, function () {
+            return new class implements LoginResponse {
+                public function toResponse($request)
+                {
+                    // ログイン後、未認証ユーザーならメール認証ページへ強制誘導
+                    if (! Auth::user()->hasVerifiedEmail()) {
+                        return redirect()->route('verification.notice');
+                    }
+    
+                    // 認証済みなら既存の遷移（profile でOKならそのまま）
+                    return redirect('/profile');
+                }
+            };
+        });
     }
 }

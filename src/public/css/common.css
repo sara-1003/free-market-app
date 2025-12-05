@@ -1,11 +1,15 @@
 .header{
     background: #000;
+    width: 100%;
 }
 
 .header__inner{
     margin: 0 auto;
     padding: 10px 15px;
-    max-width: 1400px;
+    max-width: 1540px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .header__logo {
@@ -17,21 +21,14 @@
 
 .header__logo img{
     height: 40px;
-}
-
-.header__inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin: 0 auto;
-    padding: 8px 10px;
+    margin-right: 20px;
 }
 
 .search-form {
     width: 500px;
-    padding: 10px;
-    margin: 0 70px;
+    padding: 10px 5px;
+    margin: 0 40px 0 40px;
+    flex-grow: 1;
 }
 
 .search-form__input {
@@ -48,6 +45,8 @@
 .header-nav__list {
     display: flex;
     align-items: center;
+    margin-left: 100px;
+    white-space: nowrap;
 }
 
 .header-nav__item a:not(.header__sell--button),
