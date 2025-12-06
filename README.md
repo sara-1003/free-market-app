@@ -41,6 +41,12 @@ php artisan migrate
 php artisan db:seed
 ```
 
+### 単体テスト(PHPUnit)の環境構築
+1. 
+2. 
+3. 
+4. 
+
 ## 使用技術（実行環境）
 - Laravel 8.83.29
 - PHP 8.1.33
