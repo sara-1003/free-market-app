@@ -114,11 +114,11 @@ class ItemController extends Controller
     public function update(AddressRequest $request,$item_id)
     {
         $user=auth()->user();
-
-        $user->profile()->updateOrCreate([], [
-        'post_code' => $request->post_code,
-        'address'   => $request->address,
-        'building'  => $request->building,
+        
+        session([
+            'order_post_code' => $request->post_code,
+            'order_address'   => $request->address,
+            'order_building'  => $request->building,
     ]);
     return redirect('/purchase/' . $item_id);
 
@@ -134,6 +134,9 @@ class ItemController extends Controller
         'user_id' => $user->id,
         'item_id' => $item->id,
         'payment_method' => $request->payment_method,
+        'post_code' => session('order_post_code', $user->profile->post_code),
+        'address' => session('order_address', $user->profile->address),
+        'building' => session('order_building', $user->profile->building),
     ]);
 
     $item->update(['sold' => true]);

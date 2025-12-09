@@ -33,11 +33,14 @@
                 <h3 class="address__item-title">配送先</h3>
                 <a class="address__item--change" href="/purchase/address/{{$item->id}}">変更する</a>
             </div>
-            <p class="address__item--post">〒{{ $profile->post_code }}</p>
-            <p class="address__item--address">{{ $profile->address }}
-                @if(!empty($profile->building))
-                {{ $profile->building}}
-                @endif
+            <p class="address__item--post">〒{{ session('order_post_code', $profile->post_code) }}</p>
+            <p class="address__item--address">{{ session('order_address', $profile->address) }}
+            @php
+                $building = session('order_building', $profile->building);
+            @endphp
+            @if(!empty($building))
+                {{ $building }}
+            @endif
             </p>
             @error('address')
             {{$message}}

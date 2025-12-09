@@ -42,7 +42,14 @@ public function index(Request $request)
     } else {
         // それ以外はおすすめを表示
         $tab = 'best';
-        $items = Item::latest()->get();
+
+        if(auth()->check()){
+            $items=Item::where('user_id','!=',auth()->id())
+                ->latest()
+                ->get();
+        }else{
+            $items = Item::latest()->get();
+        }
     }
 
     return view('index', compact('items', 'tab'));

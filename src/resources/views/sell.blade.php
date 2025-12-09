@@ -140,5 +140,15 @@ categoryLabels.forEach(label => {
         }
     });
 });
+
+// セレクトの「選択してください」を開いたときに消す
+const conditionSelect = document.getElementById('condition');
+
+conditionSelect.addEventListener('focus', () => {
+    const firstOption = conditionSelect.querySelector('option[value=""]');
+    if (firstOption) {
+        firstOption.remove();
+    }
+});
 </script>
 @endsection
