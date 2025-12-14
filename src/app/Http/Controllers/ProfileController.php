@@ -17,7 +17,7 @@ class ProfileController extends Controller
     public function create()
     {
         $user=Auth()->user();
-        
+
         if($user->profile){
             return redirect('/');
         }
@@ -50,7 +50,7 @@ class ProfileController extends Controller
         }
 
         $user->profile()->create($profile);
-        
+
         return redirect('/');
     }
 
@@ -66,9 +66,9 @@ class ProfileController extends Controller
         // order() → Item に変換
         $items = $user->order()->with('item')->get()
                 ->map(function($order){
-                   return $order->item; // Order から Item を取り出す
+                    return $order->item;
                 })
-                ->filter(); // null（商品が削除されている場合など）を除去
+                ->filter();
         }
         return view('profile',compact('user','items','page'));
     }
@@ -102,7 +102,7 @@ class ProfileController extends Controller
         }
 
         $user->profile()->update($profile);
-        
+
         return redirect('/mypage');
     }
 }

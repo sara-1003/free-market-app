@@ -12,63 +12,68 @@ class AuthController extends Controller
 public function index(Request $request)
 {
     $tab = $request->tab;
+    $keyword = session('search_keyword');
 
-    // 検索保持
-    $keyword=session()->get('search_keyword');
-
-    if(!empty($keyword)){
-        if($tab==='mylist' && auth()->check()){
-            $items=auth()->user()
-            ->favoriteItems()
-            ->where('name','like',"%{$keyword}%")
-            ->latest()
-            ->get();
-        }else{
-            $items=Item::keywordSearch($keyword)->get();
-            $tab='best';
-        }
-
-        return view('index',compact('items','tab'));
-    }
-
-    // ログイン済みかつタブ指定なしならマイリスト
-    if ($tab === null && auth()->check()) {
+    if (auth()->check() && $tab === null) {
         $tab = 'mylist';
     }
 
-    if ($tab === 'mylist' && auth()->check()) {
-        // マイリスト表示（ログイン済みのみ）
-        $items = auth()->user()->favoriteItems()->latest()->get();
-    } else {
-        // それ以外はおすすめを表示
-        $tab = 'best';
+    if ($tab !== 'mylist' && $tab !== null) {
+        session()->forget('search_keyword');
+        $keyword = null;
+    }
 
-        if(auth()->check()){
-            $items=Item::where('user_id','!=',auth()->id())
-                ->latest()
-                ->get();
-        }else{
-            $items = Item::latest()->get();
+    if ($tab === 'mylist') {
+        if (!auth()->check()) {
+            return redirect()->route('login');
         }
+
+        $query = auth()->user()->favoriteItems();
+
+        if (!empty($keyword)) {
+            $query->where('name', 'like', "%{$keyword}%");
+        }
+
+        $items = $query->latest()->get();
+    } else {
+        $tab = 'best';
+        $query = Item::query();
+
+        if (auth()->check()) {
+            $query->where('user_id', '!=', auth()->id());
+        }
+
+        if (!empty($keyword)) {
+            $query->where('name', 'like', "%{$keyword}%");
+        }
+
+        $items = $query->latest()->get();
     }
 
     return view('index', compact('items', 'tab'));
 }
 
-    // headerの検索機能
-    public function search(Request $request)
-    {
-// 検索保持
-        $keyword=$request->keyword;
-        if(!empty($keyword)){
-            session()->put('search_keyword',$keyword);
-        }
+public function search(Request $request)
+{
+    $keyword = $request->keyword;
 
-
-        $items=Item::keywordSearch($request->keyword)->get();
-
-        $tab='best';
-
-        return view('index',compact('items','tab'));
+    if (!empty($keyword)) {
+        session(['search_keyword' => $keyword]);
     }
+
+    $query = Item::query();
+
+    if (auth()->check()) {
+        $query->where('user_id', '!=', auth()->id());
+    }
+
+    if (!empty($keyword)) {
+        $query->where('name', 'like', "%{$keyword}%");
+    }
+
+    $items = $query->latest()->get();
+    $tab = 'best';
+
+    return view('index', compact('items', 'tab'));
+}
 }

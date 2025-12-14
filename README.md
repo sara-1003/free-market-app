@@ -42,10 +42,52 @@ php artisan db:seed
 ```
 
 ### 単体テスト(PHPUnit)の環境構築
-1. 
-2. 
-3. 
-4. 
+※ 本セクションは環境構築完了後に実施してください
+1. `docker-compose exec mysql bash`
+2. `mysql -u root -p`
+3. `CREATE DATABASE demo_test;`
+4. テスト用DB接続設定の追加
+``` text
+'mysql_test' => [
+    'driver' => 'mysql',
+    'host' => env('DB_HOST', '127.0.0.1'),
+    'port' => env('DB_PORT', '3306'),
+    'database' => 'demo_test',
+    'username' => 'root',
+    'password' => 'root',
+    'charset' => 'utf8mb4',
+    'collation' => 'utf8mb4_unicode_ci',
+],
+```
+5. 「.env」ファイルを複製し 「.env.testing」ファイルに命名を変更。
+6. .env.testingに以下の環境変数を追加
+``` text
+APP_NAME=Laravel
+APP_ENV=test
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql_test
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=demo_test
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+7. アプリケーションキーの作成
+``` bash
+php artisan key:generate --env=testing
+```
+8. マイグレーションの実行
+``` bash
+php artisan migrate --env=testing
+```
+
+9. テストの実行
+``` bash
+vendor/bin/phpunit
+```
 
 ## 使用技術（実行環境）
 - Laravel 8.83.29
@@ -60,4 +102,4 @@ php artisan db:seed
 
 ## URL
 - 開発環境:http://localhost/
-- phpMAyAdmin::http://localhost:8080/
+- phpMyAdmin: http://localhost:8080/

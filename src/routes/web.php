@@ -66,5 +66,8 @@ Route::middleware('auth')->group(function () {
         }
         return redirect('/');
     })->middleware('auth', 'signed')->name('verification.verify');
+    Route::get('/email/verify/link', function () {
+        return redirect('http://localhost:8025');
+    })->name('verification.external');
 });
 
