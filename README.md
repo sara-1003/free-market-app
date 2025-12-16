@@ -59,7 +59,7 @@ php artisan db:seed
     'collation' => 'utf8mb4_unicode_ci',
 ],
 ```
-5. 「.env」ファイルを複製し 「.env.testing」ファイルに命名を変更。
+5. 「.env」ファイルを複製し 「.env.testing」ファイルに命名を変更
 6. .env.testingに以下の環境変数を追加
 ``` text
 APP_NAME=Laravel

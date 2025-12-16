@@ -25,16 +25,16 @@ public function index(Request $request)
 
     if ($tab === 'mylist') {
         if (!auth()->check()) {
-            return redirect()->route('login');
+            $items = collect();
+        } else {
+            $query = auth()->user()->favoriteItems();
+
+            if (!empty($keyword)) {
+                $query->where('name', 'like', "%{$keyword}%");
         }
 
-        $query = auth()->user()->favoriteItems();
-
-        if (!empty($keyword)) {
-            $query->where('name', 'like', "%{$keyword}%");
+            $items = $query->latest()->get();
         }
-
-        $items = $query->latest()->get();
     } else {
         $tab = 'best';
         $query = Item::query();
