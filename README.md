@@ -8,7 +8,7 @@
 
 > *MacのM1・M2チップのPCの場合、`no matching manifest for linux/arm64/v8 in the manifest list entries`のメッセージが表示されビルドができないことがあります。
 エラーが発生する場合は、docker-compose.ymlファイルの「mysql」内に「platform」の項目を追加で記載してください*
-``` bash
+```bash
 mysql:
     platform: linux/x86_64(この文追加)
     image: mysql:8.0.26
@@ -20,7 +20,7 @@ mysql:
 2. `composer install`
 3. 「.env.example」ファイルを 「.env」ファイルに命名を変更。または、新しく.envファイルを作成
 4. .envに以下の環境変数を追加
-``` text
+```text
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
@@ -29,15 +29,15 @@ DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
 ```
 5. アプリケーションキーの作成
-``` bash
+```bash
 php artisan key:generate
 ```
 6. マイグレーションの実行
-``` bash
+```bash
 php artisan migrate
 ```
 7. シーディングの実行
-``` bash
+```bash
 php artisan db:seed
 ```
 
@@ -47,7 +47,7 @@ php artisan db:seed
 2. `mysql -u root -p`
 3. `CREATE DATABASE demo_test;`
 4. テスト用DB接続設定の追加
-``` text
+```text
 'mysql_test' => [
     'driver' => 'mysql',
     'host' => env('DB_HOST', '127.0.0.1'),
@@ -61,7 +61,7 @@ php artisan db:seed
 ```
 5. 「.env」ファイルを複製し 「.env.testing」ファイルに命名を変更
 6. .env.testingに以下の環境変数を追加
-``` text
+```text
 APP_NAME=Laravel
 APP_ENV=test
 APP_KEY=
@@ -76,17 +76,65 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 7. アプリケーションキーの作成
-``` bash
+```bash
 php artisan key:generate --env=testing
 ```
 8. マイグレーションの実行
-``` bash
+```bash
 php artisan migrate --env=testing
 ```
 
 9. テストの実行
-``` bash
-vendor/bin/phpunit
+各機能ごとにテストファイルを作成しています。
+機能ごとにテストを実行してください。
+
+会員登録機能　　　　　　
+```bash
+vendor/bin/phpunit tests/Feature/Auth/RegisterTest.php
+```
+ログイン機能
+```bash　　　　　　
+vendor/bin/phpunit tests/Feature/Auth/LoginTest.php
+```
+ログアウト機能
+```bash　　　　　
+vendor/bin/phpunit tests/Feature/Auth/LogoutTest.php
+```
+メール認証機能
+```bash
+vendor/bin/phpunit tests/Feature/Auth/EmailTest.php
+```
+商品一覧取得
+```bash　　　　　　
+vendor/bin/phpunit tests/Feature/Item/IndexTest.php
+```
+商品検索
+```bash　　　　　　　　
+vendor/bin/phpunit tests/Feature/Item/SearchTest.php
+```
+商品詳細表示
+```bash　　　　　　
+vendor/bin/phpunit tests/Feature/Item/DetailTest.php
+```
+いいね機能
+```bash　　　　　　　
+vendor/bin/phpunit tests/Feature/Item/FavoriteTest.php
+```
+コメント機能
+```bash　　　　　　
+vendor/bin/phpunit tests/Feature/Item/CommentTest.php
+```
+商品購入関連
+```bash　　　　　　
+vendor/bin/phpunit tests/Feature/Item/PurchaseTest.php
+```
+出品商品登録
+```bash　　　　　　
+vendor/bin/phpunit tests/Feature/Item/SellTest.php
+```
+ユーザー情報取得、変更
+```bash
+vendor/bin/phpunit tests/Feature/User/ProfileTest.php
 ```
 
 ## 使用技術（実行環境）
